@@ -89,8 +89,9 @@ def get_base64(file_path):
     return base64.b64encode(data).decode()
 
 # Replace with your actual file paths
-img_base64_1 = get_base64("/Users/tusharmendiratta/Downloads/logoipl.png")  
-img_base64_2 = get_base64("/Users/tusharmendiratta/Downloads/ipl.webp")
+img_base64_1 = get_base64("images/logoipl.png")
+img_base64_2 = get_base64("images/ipl.webp")
+
 
 st.markdown(
     f"""
