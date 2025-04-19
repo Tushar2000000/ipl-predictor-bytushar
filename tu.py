@@ -97,12 +97,23 @@ st.markdown(
     f"""
     <style>
     .stApp {{
-        background-image: url("data:image/webp;base64,{img_base64_1}"), url("data:image/webp;base64,{img_base64_2}");
+        background-image: 
+            url("data:image/webp;base64,{img_base64_1}"), 
+            url("data:image/webp;base64,{img_base64_2}");
         background-repeat: no-repeat;
-        background-position: top left, bottom right;  /* You can customize positioning */
-        background-size: 300px 200px, 400px 300px;  /* Customize size of both images */
+        background-position: top left, bottom right;
+        background-size: contain, contain;  /* Scales better on all screens */
+        background-attachment: fixed;
+    }}
+
+    @media (max-width: 768px) {{
+        .stApp {{
+            background-position: center top, center bottom;
+            background-size: 150px 100px, 200px 150px;
+        }}
     }}
     </style>
     """,
     unsafe_allow_html=True
 )
+
