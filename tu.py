@@ -106,51 +106,52 @@ img_base64_logo = get_base64("images/logoipl.png")
 img_base64_ipl = get_base64("images/ipl.webp")  
 
 # Inject logo at top and IPL image at bottom using HTML/CSS
+import streamlit as st
+import base64
+
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+# Load and encode logo
+img_base64_logo = get_base64("images/logoipl.png")  # Replace with your image path
+
+# Inject HTML/CSS for animated, centered logo
 st.markdown(
     f"""
     <style>
-    .logo-container {{
+    @keyframes floatLogo {{
+        0% {{ transform: translateY(0px); }}
+        50% {{ transform: translateY(-10px); }}
+        100% {{ transform: translateY(0px); }}
+    }}
+
+    .logo-wrapper {{
         display: flex;
         justify-content: center;
         margin-top: 10px;
+        animation: floatLogo 3s ease-in-out infinite;
     }}
-    .logo-container img {{
-        width: 150px;
+
+    .logo-wrapper img {{
+        width: 160px;
         height: auto;
     }}
-    .ipl-footer {{
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        pointer-events: none;
-        z-index: -1;
-    }}
-    .ipl-footer img {{
-        width: 300px;
-        height: auto;
-        opacity: 0.8;
-    }}
+
     @media (max-width: 768px) {{
-        .logo-container img {{
+        .logo-wrapper img {{
             width: 120px;
-        }}
-        .ipl-footer img {{
-            width: 200px;
         }}
     }}
     </style>
 
-    <div class="logo-container">
-        <img src="data:image/png;base64,{img_base64_logo}" alt="Logo">
-    </div>
-
-    <div class="ipl-footer">
-        <img src="data:image/webp;base64,{img_base64_ipl}" alt="IPL Image">
+    <div class="logo-wrapper">
+        <img src="data:image/png;base64,{img_base64_logo}" alt="Animated Logo">
     </div>
     """,
     unsafe_allow_html=True
 )
+
 
 
