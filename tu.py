@@ -130,6 +130,18 @@ img_base64_logo = get_base64("images/logoipl.png")       # top logo
 img_base64_bottom = get_base64("images/ipl-bottom.png")  # bottom IPL image
 
 # Inject custom CSS
+import streamlit as st
+import base64
+
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+# Load and encode logo image
+img_base64_logo = get_base64("images/logoipl.png")  # Make sure this path is correct
+
+# Place this at the **very top** of your app
 st.markdown(
     f"""
     <style>
@@ -143,6 +155,9 @@ st.markdown(
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 0px;
+        margin-bottom: 20px;
+        animation: floatLogo 3s ease-in-out infinite;
         position: fixed;
         top: 10px;
         left: 0;
@@ -150,7 +165,6 @@ st.markdown(
         z-index: 9999;
         background-color: white;
         padding: 10px 0;
-        animation: floatLogo 3s ease-in-out infinite;
     }}
 
     .logo-container img {{
@@ -158,26 +172,9 @@ st.markdown(
         height: auto;
     }}
 
-    .bottom-image {{
-        position: fixed;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 9998;
-    }}
-
-    .bottom-image img {{
-        width: 200px;
-        height: auto;
-        opacity: 0.9;
-    }}
-
     @media (max-width: 768px) {{
         .logo-container img {{
             width: 100px;
-        }}
-        .bottom-image img {{
-            width: 120px;
         }}
     }}
     </style>
@@ -185,12 +182,7 @@ st.markdown(
     <div class="logo-container">
         <img src="data:image/png;base64,{img_base64_logo}" alt="IPL Logo">
     </div>
-
-    <div class="bottom-image">
-        <img src="data:image/png;base64,{img_base64_bottom}" alt="IPL Banner">
-    </div>
     """,
     unsafe_allow_html=True
 )
-
 
