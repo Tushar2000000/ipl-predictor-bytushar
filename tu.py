@@ -90,6 +90,10 @@ import streamlit as st
 import base64
 
 # Function to convert image to base64
+import streamlit as st
+import base64
+
+# Function to convert image to base64
 def get_base64(file_path):
     with open(file_path, "rb") as f:
         data = f.read()
@@ -108,13 +112,16 @@ st.markdown(
         display: flex;
         justify-content: center;
         position: fixed;
-        top: 0;
+        top: 10px;  /* Added margin from the top */
         width: 100%;
         z-index: 1000;
         animation: bounce 3s ease infinite;
+        padding-left: 10px;  /* Prevent overflow */
+        padding-right: 10px;  /* Prevent overflow */
     }}
     .logo-container img {{
-        width: 200px;
+        width: 180px;  /* Make logo slightly smaller */
+        max-width: 100%;  /* Ensure it doesn't overflow */
         height: auto;
     }}
     /* Bounce animation */
@@ -145,7 +152,7 @@ st.markdown(
     /* Responsive adjustments */
     @media (max-width: 768px) {{
         .logo-container img {{
-            width: 150px;
+            width: 150px;  /* Logo size for smaller screens */
         }}
         .ipl-footer img {{
             width: 200px;
@@ -165,3 +172,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+
+
