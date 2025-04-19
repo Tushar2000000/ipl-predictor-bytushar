@@ -93,27 +93,64 @@ img_base64_1 = get_base64("images/logoipl.png")
 img_base64_2 = get_base64("images/ipl.webp")
 
 
+import streamlit as st
+import base64
+
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+# Replace with relative paths if running on Streamlit Cloud
+img_base64_logo = get_base64("images/logoipl.png")  
+img_base64_ipl = get_base64("images/ipl.webp")  
+
+# Inject logo at top and IPL image at bottom using HTML/CSS
 st.markdown(
     f"""
     <style>
-    .stApp {{
-        background-image: 
-            url("data:image/webp;base64,{img_base64_1}"), 
-            url("data:image/webp;base64,{img_base64_2}");
-        background-repeat: no-repeat;
-        background-position: top left, bottom right;
-        background-size: contain, contain;  /* Scales better on all screens */
-        background-attachment: fixed;
+    .logo-container {{
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
     }}
-
+    .logo-container img {{
+        width: 150px;
+        height: auto;
+    }}
+    .ipl-footer {{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        pointer-events: none;
+        z-index: -1;
+    }}
+    .ipl-footer img {{
+        width: 300px;
+        height: auto;
+        opacity: 0.8;
+    }}
     @media (max-width: 768px) {{
-        .stApp {{
-            background-position: center top, center bottom;
-            background-size: 150px 100px, 200px 150px;
+        .logo-container img {{
+            width: 120px;
+        }}
+        .ipl-footer img {{
+            width: 200px;
         }}
     }}
     </style>
+
+    <div class="logo-container">
+        <img src="data:image/png;base64,{img_base64_logo}" alt="Logo">
+    </div>
+
+    <div class="ipl-footer">
+        <img src="data:image/webp;base64,{img_base64_ipl}" alt="IPL Image">
+    </div>
     """,
     unsafe_allow_html=True
 )
+
 
