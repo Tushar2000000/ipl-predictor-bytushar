@@ -117,7 +117,19 @@ def get_base64(file_path):
 # Load and encode logo
 img_base64_logo = get_base64("images/logoipl.png")  # Replace with your image path
 
-# Inject HTML/CSS for animated, centered logo
+import streamlit as st
+import base64
+
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+# Load and encode both images
+img_base64_logo = get_base64("images/logoipl.png")       # top logo
+img_base64_bottom = get_base64("images/ipl-bottom.png")  # bottom IPL image
+
+# Inject custom CSS
 st.markdown(
     f"""
     <style>
@@ -127,31 +139,58 @@ st.markdown(
         100% {{ transform: translateY(0px); }}
     }}
 
-    .logo-wrapper {{
+    .logo-container {{
         display: flex;
         justify-content: center;
-        margin-top: 10px;
+        align-items: center;
+        position: fixed;
+        top: 10px;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        background-color: white;
+        padding: 10px 0;
         animation: floatLogo 3s ease-in-out infinite;
     }}
 
-    .logo-wrapper img {{
-        width: 160px;
+    .logo-container img {{
+        width: 150px;
         height: auto;
     }}
 
+    .bottom-image {{
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9998;
+    }}
+
+    .bottom-image img {{
+        width: 200px;
+        height: auto;
+        opacity: 0.9;
+    }}
+
     @media (max-width: 768px) {{
-        .logo-wrapper img {{
+        .logo-container img {{
+            width: 100px;
+        }}
+        .bottom-image img {{
             width: 120px;
         }}
     }}
     </style>
 
-    <div class="logo-wrapper">
-        <img src="data:image/png;base64,{img_base64_logo}" alt="Animated Logo">
+    <div class="logo-container">
+        <img src="data:image/png;base64,{img_base64_logo}" alt="IPL Logo">
+    </div>
+
+    <div class="bottom-image">
+        <img src="data:image/png;base64,{img_base64_bottom}" alt="IPL Banner">
     </div>
     """,
     unsafe_allow_html=True
 )
-
 
 
