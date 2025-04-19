@@ -86,12 +86,16 @@ import streamlit as st
 import streamlit as st
 import base64
 
+import streamlit as st
+import base64
+
+# Function to convert image to base64
 def get_base64(file_path):
     with open(file_path, "rb") as f:
         data = f.read()
     return base64.b64encode(data).decode()
 
-# Replace with relative paths if running on Streamlit Cloud
+# Replace with your image paths
 img_base64_logo = get_base64("images/logoipl.png")  
 img_base64_ipl = get_base64("images/ipl.webp")  
 
@@ -99,15 +103,31 @@ img_base64_ipl = get_base64("images/ipl.webp")
 st.markdown(
     f"""
     <style>
+    /* Logo at top center with animation */
     .logo-container {{
         display: flex;
         justify-content: center;
-        margin-top: 10px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        animation: bounce 3s ease infinite;
     }}
     .logo-container img {{
-        width: 150px;
+        width: 200px;
         height: auto;
     }}
+    /* Bounce animation */
+    @keyframes bounce {{
+        0%, 100% {{
+            transform: translateY(0);
+        }}
+        50% {{
+            transform: translateY(-20px);
+        }}
+    }}
+    
+    /* IPL Image at bottom center, fixed */
     .ipl-footer {{
         position: fixed;
         bottom: 0;
@@ -115,16 +135,17 @@ st.markdown(
         display: flex;
         justify-content: center;
         pointer-events: none;
-        z-index: -1;
+        z-index: 500;
     }}
     .ipl-footer img {{
         width: 300px;
         height: auto;
         opacity: 0.8;
     }}
+    /* Responsive adjustments */
     @media (max-width: 768px) {{
         .logo-container img {{
-            width: 120px;
+            width: 150px;
         }}
         .ipl-footer img {{
             width: 200px;
@@ -132,10 +153,12 @@ st.markdown(
     }}
     </style>
 
+    <!-- Logo at the top -->
     <div class="logo-container">
         <img src="data:image/png;base64,{img_base64_logo}" alt="Logo">
     </div>
 
+    <!-- IPL image at the bottom -->
     <div class="ipl-footer">
         <img src="data:image/webp;base64,{img_base64_ipl}" alt="IPL Image">
     </div>
