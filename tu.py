@@ -94,6 +94,10 @@ import streamlit as st
 import base64
 
 # Function to convert image to base64
+import streamlit as st
+import base64
+
+# Function to convert image to base64
 def get_base64(file_path):
     with open(file_path, "rb") as f:
         data = f.read()
@@ -112,7 +116,7 @@ st.markdown(
         display: flex;
         justify-content: center;
         position: fixed;
-        top: 10px;  /* Added margin from the top */
+        top: 5%;  /* Moved logo further down */
         width: 100%;
         z-index: 1000;
         animation: bounce 3s ease infinite;
@@ -120,8 +124,8 @@ st.markdown(
         padding-right: 10px;  /* Prevent overflow */
     }}
     .logo-container img {{
-        width: 180px;  /* Make logo slightly smaller */
-        max-width: 100%;  /* Ensure it doesn't overflow */
+        width: 200px;  /* Slightly bigger size for the logo */
+        max-width: 100%;
         height: auto;
     }}
     /* Bounce animation */
@@ -137,7 +141,7 @@ st.markdown(
     /* IPL Image at bottom center, fixed */
     .ipl-footer {{
         position: fixed;
-        bottom: 0;
+        bottom: 10px;  /* Moved IPL image slightly up */
         width: 100%;
         display: flex;
         justify-content: center;
@@ -145,17 +149,17 @@ st.markdown(
         z-index: 500;
     }}
     .ipl-footer img {{
-        width: 300px;
+        width: 350px;  /* Bigger size for IPL image */
         height: auto;
-        opacity: 0.8;
+        opacity: 0.9;
     }}
     /* Responsive adjustments */
     @media (max-width: 768px) {{
         .logo-container img {{
-            width: 150px;  /* Logo size for smaller screens */
+            width: 180px;  /* Smaller logo for smaller screens */
         }}
         .ipl-footer img {{
-            width: 200px;
+            width: 280px;  /* Slightly smaller IPL image for smaller screens */
         }}
     }}
     </style>
@@ -172,6 +176,3 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
-
-
