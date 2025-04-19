@@ -136,77 +136,24 @@ import base64
 import streamlit as st
 import base64
 
-def get_base64(file_path):
-    with open(file_path, "rb") as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
+img_base64_1 = get_base64("images/logoipl.png")  
+img_base64_2 = get_base64("images/ipl.webp")
 
-# Load and encode both images
-img_base64_logo = get_base64("images/logoipl.png")       # top logo
-img_base64_bottom = get_base64("images/ipl-bottom.png")  # bottom IPL image
-
-# Inject custom CSS
+# Background styling with two images
 st.markdown(
     f"""
     <style>
-    @keyframes floatLogo {{
-        0% {{ transform: translateY(0px); }}
-        50% {{ transform: translateY(-10px); }}
-        100% {{ transform: translateY(0px); }}
-    }}
-
-    .logo-container {{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: fixed;
-        top: 10px;
-        left: 0;
-        right: 0;
-        z-index: 9999;
-        background-color: white;
-        padding: 10px 0;
-        animation: floatLogo 3s ease-in-out infinite;
-    }}
-
-    .logo-container img {{
-        width: 150px;
-        height: auto;
-    }}
-
-    .bottom-image {{
-        position: fixed;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 9998;
-    }}
-
-    .bottom-image img {{
-        width: 200px;
-        height: auto;
-        opacity: 0.9;
-    }}
-
-    @media (max-width: 768px) {{
-        .logo-container img {{
-            width: 100px;
-        }}
-        .bottom-image img {{
-            width: 120px;
-        }}
+    .stApp {{
+        background-image: url("data:image/webp;base64,{img_base64_1}"), url("data:image/webp;base64,{img_base64_2}");
+        background-repeat: no-repeat;
+        background-position: top left, bottom right;  /* You can customize positioning */
+        background-size: 300px 200px, 400px 300px;  /* Customize size of both images */
     }}
     </style>
-
-    <div class="logo-container">
-        <img src="data:image/png;base64,{img_base64_logo}" alt="IPL Logo">
-    </div>
-
-    <div class="bottom-image">
-        <img src="data:image/png;base64,{img_base64_bottom}" alt="IPL Banner">
-    </div>
     """,
     unsafe_allow_html=True
 )
+
+
 
 
